@@ -6,10 +6,8 @@ namespace ConsoleCalculator
     public class Calculator
     {
         double arguement1 = 0;
-        string arguement1String = "";
         char operation = '0';
         double arguement2 = 0;
-        string arguement2String = "";
         double result = 0;
 
 
@@ -38,7 +36,7 @@ namespace ConsoleCalculator
                 }
                 result = Operations.Operation(arguement1, arguement2, operation);
                 
-                Inputs.resetCalculator();
+                Inputs.ResetCalculator();
                 return Inputs.CheckIsNaN(result);
                 
             }
@@ -46,7 +44,7 @@ namespace ConsoleCalculator
             // Resetting the calculator
             else if (key == 'C' || key == 'c')
             {
-                Inputs.resetCalculator();
+                Inputs.ResetCalculator();
                 return "0";
             }
 
@@ -55,7 +53,7 @@ namespace ConsoleCalculator
                 double[] arguements = Inputs.SignToggle(arguement1, arguement2);
                 arguement1 = arguements[0];
                 arguement2 = arguements[1];
-                string output = "";
+                string output;
                 _ = Inputs.SecondArguementAdded() ? output = (arguement2).ToString() : output = (arguement1).ToString();
                 return output;
             }
@@ -66,13 +64,13 @@ namespace ConsoleCalculator
                 if(operation != '0')
                 {
                     double temp = Operations.Operation(arguement1, arguement2, operation);
-                    Inputs.resetCalculator();
+                    Inputs.ResetCalculator();
                     arguement1 = temp;
-                    arguement1String = arguement1.ToString();
+                    Inputs.SetArguement(arguement1);
                     // If output is Not a Number then give error;
                     if (Double.IsNaN(arguement1))
                     {
-                        Inputs.resetCalculator();
+                        Inputs.ResetCalculator();
                         return "-E-";
                     }
                 }
@@ -80,6 +78,7 @@ namespace ConsoleCalculator
                if(key == '+' || key == '-' || key == 'x' || key == 'X' || key == '/')
                 {
                     operation = key;
+                    Inputs.SetOperation(key);
                     Inputs.CurrentArguementReset();
                 }
                

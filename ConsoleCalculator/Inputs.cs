@@ -9,13 +9,23 @@ namespace ConsoleCalculator
         private static double arguement1 = 0;
         private static double arguement2 = 0;
         private static string currentArguement = "";
+        private static char operation = '0';
         private static bool arguement2Added = false;
 
+
+        public static void SetArguement(double value)
+        {
+            arguement1 = value;
+        }
+        public static void SetOperation(char value)
+        {
+            operation = value;
+        }
 
         public static void CurrentArguementReset()
         {
             currentArguement = "";
-            arguement2Added = true;
+            arguement2Added = false;
         }
         public static double[] GetArguements()
         {
@@ -28,7 +38,7 @@ namespace ConsoleCalculator
         }
 
 
-        public static void resetCalculator()
+        public static void ResetCalculator()
         {
             arguement1 = 0;
             arguement2 = 0;
@@ -52,7 +62,7 @@ namespace ConsoleCalculator
         {
             if (Double.IsNaN(arguement) || Double.IsInfinity(arguement))
             {
-                resetCalculator();
+                ResetCalculator();
                 return "-E-";
             }
             else
@@ -86,7 +96,7 @@ namespace ConsoleCalculator
 
 
             // If operation is not yet given, means still arguement 1 inputted
-            if (!Inputs.SecondArguementAdded())
+            if (operation == '0')
             {
                 // if '.' is pressed then check if last value was also a '.'
                 // Input only if the last value is not a '.'
