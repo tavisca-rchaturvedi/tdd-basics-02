@@ -36,7 +36,7 @@ namespace ConsoleCalculator
             {
                 return Subtraction(arguement1, arguement2);
             }
-            else if (operation == 'x' || operation == '*')
+            else if (operation == 'x' || operation == 'X')
             {
                 return Multiplication(arguement1, arguement2);
             }
