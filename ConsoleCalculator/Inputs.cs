@@ -10,8 +10,20 @@ namespace ConsoleCalculator
         private static double arguement2 = 0;
         private static string arguement1String = "";
         private static string arguement2String = "";
+        private static string currentArguement = "";
         private static char operation = '0';
         private static bool arguement2Added = false;
+
+
+        public static double[] GetArguements()
+        {
+            return new double[] { arguement1, arguement2 };
+        }
+
+        public static bool SecondArguementAdded()
+        {
+            return arguement2Added;
+        }
 
 
         public static void resetCalculator()
@@ -38,7 +50,7 @@ namespace ConsoleCalculator
 
         public static string CheckIsNaN(double arguement)
         {
-            if (Double.IsNaN(arguement))
+            if (Double.IsNaN(arguement) || Double.IsInfinity(arguement))
             {
                 resetCalculator();
                 return "-E-";
@@ -54,6 +66,17 @@ namespace ConsoleCalculator
         public static string StringInputToArguements(char key)
         {
 
+            if (key == '.')
+            {
+                if (!currentArguement.EndsWith("."))
+                    currentArguement += key;
+            }
+            else
+            {
+                currentArguement += key;
+            }
+
+
             // If operation is not yet given, means still arguement 1 inputted
             if (operation.Equals('0'))
             {
@@ -61,36 +84,17 @@ namespace ConsoleCalculator
                 // Input only if the last value is not a '.'
                 // Else give an error
 
-                if (key == '.')
-                {
-                    if (!arguement1String.EndsWith("."))
-                        arguement1String += key;
-                }
-                else
-                {
-                    arguement1String += key;
-                }
-
-                arguement1 = ParseStringToDouble(arguement1String);
-
+                //arguement1String = currentArguement;
+                
+                arguement1 = ParseStringToDouble(currentArguement);
                 return CheckIsNaN(arguement1);
                 
             }
             else
             {
                 arguement2Added = true;
-                if (key == '.')
-                {
-                    if (!arguement2String.EndsWith("."))
-                        arguement2String += key;
-                }
-                else
-                {
-                    arguement2String += key;
-                }
-
-                arguement2 = ParseStringToDouble(arguement2String);
-
+                //arguement2String = currentArguement;
+                arguement2 = ParseStringToDouble(currentArguement);
                 return CheckIsNaN(arguement2);
             }
         }

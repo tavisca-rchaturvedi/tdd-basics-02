@@ -25,10 +25,11 @@ namespace ConsoleCalculator
             // Condition to input the values of Arguements
             if((key >= 48 && key <= 57) || key == '.')
             {
-
-                return Inputs.StringInputToArguements(key);
-               
-                
+                string output = Inputs.StringInputToArguements(key);
+                double[] arguements = Inputs.GetArguements();
+                arguement1 = arguements[0];
+                arguement2 = arguements[1];
+                return output; 
             }
             else if(key == '=')
             {
@@ -38,22 +39,15 @@ namespace ConsoleCalculator
                 }
                 result = Operations.Operation(arguement1, arguement2, operation);
                 
-                resetCalculator();
-
-                if (Double.IsNaN(result) || Double.IsInfinity(result))
-                {
-                    return "-E-";
-                }
-                else
-                {
-                    return (result).ToString();
-                }
+                Inputs.resetCalculator();
+                return Inputs.CheckIsNaN(result);
+                
             }
 
             // Resetting the calculator
             else if (key == 'C' || key == 'c')
             {
-                resetCalculator();
+                Inputs.resetCalculator();
                 return "0";
             }
 
@@ -77,13 +71,13 @@ namespace ConsoleCalculator
                 if(operation != '0')
                 {
                     double temp = Operations.Operation(arguement1, arguement2, operation);
-                    resetCalculator();
+                    Inputs.resetCalculator();
                     arguement1 = temp;
                     arguement1String = arguement1.ToString();
                     // If output is Not a Number then give error;
                     if (Double.IsNaN(arguement1))
                     {
-                        resetCalculator();
+                        Inputs.resetCalculator();
                         return "-E-";
                     }
                 }
@@ -96,7 +90,7 @@ namespace ConsoleCalculator
                 {
                     operation = '-';
                 }
-               else if(key == 'x')
+               else if(key == 'x' || key == 'X')
                 {
                     operation = '*';
                 }
