@@ -8,13 +8,15 @@ namespace ConsoleCalculator
     {
         private static double arguement1 = 0;
         private static double arguement2 = 0;
-        private static string arguement1String = "";
-        private static string arguement2String = "";
         private static string currentArguement = "";
-        private static char operation = '0';
         private static bool arguement2Added = false;
 
 
+        public static void CurrentArguementReset()
+        {
+            currentArguement = "";
+            arguement2Added = true;
+        }
         public static double[] GetArguements()
         {
             return new double[] { arguement1, arguement2 };
@@ -29,9 +31,7 @@ namespace ConsoleCalculator
         public static void resetCalculator()
         {
             arguement1 = 0;
-            arguement1String = "";
             arguement2 = 0;
-            arguement2String = "";
             operation = '0';
             arguement2Added = false;
         }
@@ -61,6 +61,14 @@ namespace ConsoleCalculator
             }
         }
 
+        public static double[] SignToggle(double parameter1, double parameter2)
+        {
+            arguement1 = parameter1;
+            arguement2 = parameter2;
+            _ = Inputs.SecondArguementAdded() ? arguement2 *= -1 : arguement1 *= -1;
+            return new double[] { arguement1, arguement2 };
+        }
+
 
 
         public static string StringInputToArguements(char key)
@@ -78,7 +86,7 @@ namespace ConsoleCalculator
 
 
             // If operation is not yet given, means still arguement 1 inputted
-            if (operation.Equals('0'))
+            if (!Inputs.SecondArguementAdded())
             {
                 // if '.' is pressed then check if last value was also a '.'
                 // Input only if the last value is not a '.'
@@ -93,7 +101,6 @@ namespace ConsoleCalculator
             else
             {
                 arguement2Added = true;
-                //arguement2String = currentArguement;
                 arguement2 = ParseStringToDouble(currentArguement);
                 return CheckIsNaN(arguement2);
             }
